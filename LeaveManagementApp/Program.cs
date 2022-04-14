@@ -1,3 +1,4 @@
+using LeaveManagementApp.Configurations;
 using LeaveManagementApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//Adding Automapper Services For Dependency Injection
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddControllersWithViews();
 
