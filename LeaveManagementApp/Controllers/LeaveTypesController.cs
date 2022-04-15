@@ -59,15 +59,21 @@ namespace LeaveManagementApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,DefaultDays,Id,DateCreated,DateModified")] LeaveType leaveType)
+        /* public async Task<IActionResult> Create(
+        [Bind("Name,DefaultDays,Id,DateCreated,DateModified")]
+        LeaveType leaveType) [Modified] */
+        public async Task<IActionResult> Create(LeaveTypeVM variableVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leaveType);
+                var leavetype = mapper.Map<LeaveType>(variableVM); //Added
+                // _context.Add(leaveType); [Modified]
+                _context.Add(leavetype);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);
+            //  return View(leaveType); [Modified]
+            return View(variableVM);
         }
 
         // GET: LeaveTypes/Edit/5
