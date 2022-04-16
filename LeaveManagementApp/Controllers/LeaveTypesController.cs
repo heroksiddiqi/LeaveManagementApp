@@ -84,17 +84,16 @@ namespace LeaveManagementApp.Controllers
             {
                 return NotFound();
             }
-            return View(leaveType);
+            var leavetypeVM = mapper.Map<LeaveTypeVM>(leaveType); //added line
+            return View(leavetypeVM); // changed to leavetypeVM from leaveType
         }
 
         // POST: LeaveTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,DefaultDays,Id,DateCreated,DateModified")] LeaveType leaveType)
+        public async Task<IActionResult> Edit(int id, LeaveTypeVM variableVM)
         {
-            if (id != leaveType.Id)
+            if (id != variableVM.Id)
             {
                 return NotFound();
             }
@@ -103,12 +102,13 @@ namespace LeaveManagementApp.Controllers
             {
                 try
                 {
+                    var leaveType = mapper.Map<LeaveType>(variableVM); //added line  
                     _context.Update(leaveType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LeaveTypeExists(leaveType.Id))
+                    if (!LeaveTypeExists(variableVM.Id))
                     {
                         return NotFound();
                     }
@@ -119,7 +119,7 @@ namespace LeaveManagementApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);
+            return View(variableVM);
         }
 
         // GET: LeaveTypes/Delete/5
