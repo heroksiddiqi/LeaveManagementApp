@@ -44,8 +44,9 @@ namespace LeaveManagementApp.Controllers
             {
                 return NotFound();
             }
-
-            return View(leaveType);
+            //Add a new line as a paste for model mapping from GET of Edit()
+            var leavetypeVM = mapper.Map<LeaveTypeVM>(leaveType); 
+            return View(leavetypeVM); // changed to leavetypeVM from leaveType
         }
 
         // GET: LeaveTypes/Create
